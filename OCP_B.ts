@@ -19,18 +19,6 @@ class TaskManagement {
     this.task = task;
   }
 
-  // get taskDetails(): TaskDetails {
-  //   this.estimateBuffer();
-
-  //   return {
-  //     name: this.task.name,
-  //     complexity: this.task.complexity,
-  //     cost: this.task.cost,
-  //     buffer: this.buffer,
-  //     totalCost: this.task.cost + this.buffer
-  //   };
-  // }
-
   get estimateBuffer(): number {
     switch (this.task.complexity) {
       case 'easy':
