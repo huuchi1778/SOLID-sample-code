@@ -1,0 +1,11 @@
+
+{
+  "ts-node": {
+    "compilerOptions":{
+      "strictPropertyInitialization": false
+    }
+  },
+  "compilerOptions": {
+    "strictPropertyInitialization": false
+  }
+}
