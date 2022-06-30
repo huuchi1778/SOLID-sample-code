@@ -1,43 +1,51 @@
-type Task = {
-  name: string,
-  complexity: string,
-  cost: number
+type Question = {
+  description: string,
+  type: string
 }
 
-type TaskDetails = {
-  name: string,
-  complexity: string,
-  cost: number,
-  buffer: number,
-  totalCost: number
-}
+class Exam {
+  questions: Question[];
 
-class TaskManagement {
-  private task: Task;
-
-  constructor(task: Task) {
-    this.task = task;
+  constructor(questions: Question[]) {
+    this.questions = questions;
   }
 
-  get estimateBuffer(): number {
-    switch (this.task.complexity) {
-      case 'easy':
-        return this.task.cost * 0.2;
-      case 'moderate':
-        return this.task.cost * 0.4;
-      case 'hard':
-        return this.task.cost * 0.6;
-      default:
-        return this.task.cost * 0.4;
-    }
+  printOut() {
+    this.questions.forEach(question => {
+      console.log(question.description);
+      switch (question.type) {
+        case 'boolean':
+          console.log('1. True');
+          console.log('2. False');
+          break;
+        case 'multipleChoice':
+          console.log('1. Option A');
+          console.log('2. Option B');
+          console.log('3. Option C');
+          console.log('4. Option D');
+          break;
+        case 'text':
+          console.log('Answer:_____________');
+          break;
+      }
+    });
   }
 }
 
-const aTask = {
-  name: 'cooking',
-  complexity: 'hard',
-  cost: 1
-};
+const questions = [
+  {
+    description: 'Is 2 + 5 = 7?',
+    type: 'boolean'
+  },
+  {
+    description: 'What is your favorite color?',
+    type: 'multipleChoice'
+  },
+  {
+    description: 'What is your name?',
+    type: 'text'
+  }
+];
 
-const task = new TaskManagement(aTask);
-console.log(task.estimateBuffer);
+const myExam = new Exam(questions);
+myExam.printOut();
