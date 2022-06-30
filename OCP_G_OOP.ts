@@ -1,78 +1,68 @@
-type Task = {
-  name: string,
-  complexity: string,
-  cost: number
+type Question = {
+  description: string,
+  printQuestionChoices(): void;
 }
 
-type TaskDetails = {
-  name: string,
-  complexity: string,
-  cost: number,
-  buffer: number,
-  totalCost: number
-}
+class Exam {
+  questions: Question[];
 
-interface TaskManagement {
-  get estimateBuffer(): number;
-}
-
-class EasyTaskManagement implements TaskManagement {
-  private task: Task;
-
-  constructor(task: Task) {
-    // super();
-    this.task = task;
+  constructor(questions: Question[]) {
+    this.questions = questions;
   }
 
-  get estimateBuffer(): number {
-    return this.task.cost * 0.2;
+  printOut() {
+    this.questions.forEach(question => {
+      console.log(question.description);
+      question.printQuestionChoices();
+    });
   }
 }
 
-class ModerateTaskManagement implements TaskManagement {
-  private task: Task;
+class BooleanQuestion {
+  description: string;
 
-  constructor(task: Task) {
-    // super();
-    this.task = task;
+  constructor(description: string) {
+    this.description = description;
   }
 
-  get estimateBuffer(): number {
-    return this.task.cost * 0.4;
-  }
-}
-
-class HardTaskManagement implements TaskManagement {
-  private task: Task;
-
-  constructor(task: Task) {
-    // super();
-    this.task = task;
-  }
-
-  get estimateBuffer(): number {
-    return this.task.cost * 0.6;
+  printQuestionChoices() {
+    console.log('1. True');
+    console.log('2. False');
   }
 }
 
-class EstimateBuffer {
-  private taskManagement: TaskManagement;
+class MultipleChoiceQuestion {
+  description: string;
 
-  constructor(taskManagement: TaskManagement) {
-    this.taskManagement = taskManagement;
+  constructor(description: string) {
+    this.description = description;
   }
 
-  get estimateBuffer(): number {
-    return this.taskManagement.estimateBuffer;
+  printQuestionChoices() {
+    console.log('1. Option A');
+    console.log('2. Option B');
+    console.log('3. Option C');
+    console.log('4. Option D');
   }
 }
 
-const aTask = {
-  name: 'cooking',
-  complexity: 'hard',
-  cost: 3
-};
+class TextQuestion {
+  description: string;
 
-const task = new EstimateBuffer(new HardTaskManagement(aTask));
-// const task = new HardTaskManagement(aTask);
-console.log(task.estimateBuffer);
+  constructor(description: string) {
+    this.description = description;
+  }
+
+  printQuestionChoices() {
+    console.log('Answer:_____________');
+  }
+}
+
+const questions = [
+  new BooleanQuestion('Is 2 + 5 = 7?'),
+  new MultipleChoiceQuestion('What is your favourite color?'),
+  new TextQuestion('What is your name?')
+];
+
+const myExam = new Exam(questions);
+myExam.printOut();
