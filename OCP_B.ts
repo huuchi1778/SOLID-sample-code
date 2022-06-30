@@ -14,39 +14,33 @@ type TaskDetails = {
 
 class TaskManagement {
   private task: Task;
-  private buffer: number;
 
   constructor(task: Task) {
     this.task = task;
-    this.buffer = 0;
   }
 
-  get taskDetails(): TaskDetails {
-    this.estimateBuffer();
+  // get taskDetails(): TaskDetails {
+  //   this.estimateBuffer();
 
-    return {
-      name: this.task.name,
-      complexity: this.task.complexity,
-      cost: this.task.cost,
-      buffer: this.buffer,
-      totalCost: this.task.cost + this.buffer
-    };
-  }
+  //   return {
+  //     name: this.task.name,
+  //     complexity: this.task.complexity,
+  //     cost: this.task.cost,
+  //     buffer: this.buffer,
+  //     totalCost: this.task.cost + this.buffer
+  //   };
+  // }
 
-  private estimateBuffer(): void {
+  get estimateBuffer(): number {
     switch (this.task.complexity) {
       case 'easy':
-        this.buffer = this.task.cost * 0.2;
-        break;
+        return this.task.cost * 0.2;
       case 'moderate':
-        this.buffer = this.task.cost * 0.4;
-        break;
+        return this.task.cost * 0.4;
       case 'hard':
-        this.buffer = this.task.cost * 0.6;
-        break;
+        return this.task.cost * 0.6;
       default:
-        this.buffer = this.task.cost * 0.4;
-        break;
+        return this.task.cost * 0.4;
     }
   }
 }
@@ -58,4 +52,4 @@ const aTask = {
 };
 
 const task = new TaskManagement(aTask);
-console.log(task.taskDetails);
+console.log(task.estimateBuffer);
