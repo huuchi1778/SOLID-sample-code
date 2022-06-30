@@ -3,16 +3,39 @@ type TaskList = {
   cost: number
 }
 
-class Task {
+class Database {
+  connect(userName: string, pass: string, table: string) {
+    console.log('Connected to database:');
+    console.log(`Username: ${userName}`);
+    console.log(`Password: ${pass}`);
+    console.log(`Table: ${table}`);
+  }
+}
+
+class TaskRepository {
+  db: Database;
   tasks: TaskList[];
-  private db: string;
+
+  constructor(taskList: TaskList[]) {
+    this.db = new Database();
+    this.tasks = taskList;
+  }
+
+  saveToDB() {
+    this.db.connect('huuchi1778', '1234', 'tasks');
+    this.tasks.forEach(task => {
+      console.log(`Task ${task.taskName} has been saved to DB`);
+    });
+  }
+}
+
+class Task {
+  private tasks: TaskList[];
   private totalCost: number;
 
   constructor(tasksList: TaskList[]) {
     this.tasks = tasksList;
-    this.db = 'Connected to DB';
     this.totalCost = 0;
-
   }
 
   addTask(newTasks: TaskList[]) {
@@ -24,29 +47,35 @@ class Task {
     console.log(`The total cost is: ${this.totalCost}`);
   }
 
-  saveToDB() {
-    console.log(this.db);
-    this.tasks.forEach(task => {
-      console.log(`Task ${task.taskName} has been saved to DB`);
-    });
+  get taskList() {
+    return this.tasks;
   }
 }
 
 
 const myTasks: TaskList[] = [
   {
-    taskName: 'homework',
+    taskName: 'Homework',
     cost: 5
   },
   {
-    taskName: 'grocery',
+    taskName: 'Grocery',
     cost: 1
   },
   {
-    taskName: 'cleaning',
+    taskName: 'Cleaning',
     cost: 0.5
   }
 ];
 
 const tasks = new Task(myTasks);
-tasks.getTotalCost();
+console.log(tasks.taskList);
+tasks.addTask([{
+  taskName: 'Sleeping',
+  cost: 7
+}]);
+console.log(tasks.taskList);
+
+const taskRepo = new TaskRepository(tasks.taskList);
+taskRepo.saveToDB();
+
